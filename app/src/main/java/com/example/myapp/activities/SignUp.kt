@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.UUID
 
 class SignUp : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -34,34 +35,7 @@ class SignUp : AppCompatActivity() {
 
         val signUpBtn = binding.signUpBtn
 
-        signUpBtn.setOnClickListener {
-            val name = binding.name.text.toString()
-            val email = binding.email.text.toString()
-            val password = binding.password.text.toString()
-            val createdTime = System.currentTimeMillis()
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-            val current = LocalDateTime.now().format(formatter)
-            val user = hashMapOf(
-                "id" to "--",
-                "userId" to userId,
-                "createdAt" to "$createdTime , $current",
-                "name" to name,
-                "email" to email,
 
-                )
-
-            db.collection("users")
-                .add(user)
-                .addOnSuccessListener { documentReference ->
-                    Log.d(
-                        ContentValues.TAG,
-                        "DocumentSnapshot added with ID: ${documentReference.id}"
-                    )
-                }
-                .addOnFailureListener { e ->
-                    Log.w(ContentValues.TAG, "Error adding document", e)
-                }
-        }
 
         auth = Firebase.auth
 
@@ -110,25 +84,22 @@ class SignUp : AppCompatActivity() {
         val createdTime = System.currentTimeMillis()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val current = LocalDateTime.now().format(formatter)
+        val documentId = UUID.randomUUID().toString()
         val user = hashMapOf(
-            "id" to "--",
+            "id" to documentId,
             "userId" to userId,
-            "createdAt" to "$createdTime , $current",
+            "createdAt" to "$createdTime, $current",
             "name" to name,
-            "email" to email,
+            "email" to email
+        )
 
-            )
-
-        db.collection("users")
-            .add(user)
-            .addOnSuccessListener { documentReference ->
-                Log.d(
-                    ContentValues.TAG,
-                    "DocumentSnapshot added with ID: ${documentReference.id}"
-                )
+        db.collection("users").document(documentId)
+            .set(user)
+            .addOnSuccessListener {
+                Log.d(ContentValues.TAG, "Document added with ID: $documentId")
             }
             .addOnFailureListener { e ->
-                Log.w(ContentValues.TAG, "Error adding document", e)
-            }
+                Log.w(ContentValues.TAG, "Error adding document")
+               }
     }
 }
