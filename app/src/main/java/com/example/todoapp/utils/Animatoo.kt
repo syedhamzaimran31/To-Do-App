@@ -1,8 +1,8 @@
-package com.example.myapp.utils
+package com.example.todoapp.utils
 
 import android.app.Activity
 import android.content.Context
-import com.example.myapp.R
+import com.example.todoapp.R
 
 
 

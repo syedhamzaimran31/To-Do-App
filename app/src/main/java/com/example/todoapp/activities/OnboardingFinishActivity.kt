@@ -1,11 +1,11 @@
-package com.example.myapp.activities
+package com.example.todoapp.activities
 
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapp.databinding.ActivityOnboardingFinishBinding
+import com.example.todoapp.databinding.ActivityOnboardingFinishBinding
 
 class OnboardingFinishActivity : AppCompatActivity() {
     private lateinit var btnStart: LinearLayout

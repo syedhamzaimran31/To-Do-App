@@ -1,4 +1,4 @@
-package com.example.myapp.fragments
+package com.example.todoapp.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
-import com.example.myapp.databinding.FragmentOnboarding1Binding
+import com.example.todoapp.databinding.FragmentOnboarding1Binding
 
 class OnboardingFragment : Fragment() {
     private var title: String? = null

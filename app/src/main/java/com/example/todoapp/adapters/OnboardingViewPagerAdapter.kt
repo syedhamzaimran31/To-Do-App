@@ -1,11 +1,11 @@
-package com.example.myapp.adapters
+package com.example.todoapp.adapters
 
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.myapp.R
-import com.example.myapp.fragments.OnboardingFragment
+import com.example.todoapp.R
+import com.example.todoapp.fragments.OnboardingFragment
 
 
 class OnboardingViewPagerAdapter(
@@ -19,17 +19,17 @@ class OnboardingViewPagerAdapter(
             0 -> OnboardingFragment.newInstance(
                 context.resources.getString(R.string.title_onboarding_1),
                 context.resources.getString(R.string.description_onboarding_1),
-                R.raw.lottie_delivery_boy_bumpy_ride
+                R.raw.task_list_person
             )
             1 -> OnboardingFragment.newInstance(
                 context.resources.getString(R.string.title_onboarding_2),
                 context.resources.getString(R.string.description_onboarding_2),
-                R.raw.lottie_developer
+                R.raw.task_list_clock
             )
             else -> OnboardingFragment.newInstance(
                 context.resources.getString(R.string.title_onboarding_3),
                 context.resources.getString(R.string.description_onboarding_3),
-                R.raw.lottie_girl_with_a_notebook
+                R.raw.task_success
             )
         }
     }

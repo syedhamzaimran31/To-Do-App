@@ -1,4 +1,4 @@
-package com.example.myapp.activities
+package com.example.todoapp.activities
 
 import android.Manifest
 import android.content.Context
@@ -9,10 +9,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapp.databinding.ActivitySignInBinding
-import com.google.firebase.Firebase
+import com.example.todoapp.databinding.ActivitySignInBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.firestore
 import com.permissionx.guolindev.PermissionX
 
 
@@ -74,7 +72,6 @@ class SignIn : AppCompatActivity() {
             }
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val db = Firebase.firestore
 
         binding.signUpTv.setOnClickListener {
             val intent = Intent(applicationContext, SignUp::class.java)

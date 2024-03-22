@@ -1,11 +1,11 @@
-package com.example.myapp.activities
+package com.example.todoapp.activities
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapp.databinding.ActivityForgotPasswordBinding
+import com.example.todoapp.databinding.ActivityForgotPasswordBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 

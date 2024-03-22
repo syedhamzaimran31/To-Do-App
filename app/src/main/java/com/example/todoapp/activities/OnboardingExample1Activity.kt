@@ -1,4 +1,4 @@
-package com.example.myapp.activities
+package com.example.todoapp.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,10 +6,10 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
-import com.example.myapp.R
-import com.example.myapp.adapters.OnboardingViewPagerAdapter
-import com.example.myapp.databinding.ActivityOnboardingExample1Binding
-import com.example.myapp.utils.Animatoo
+import com.example.todoapp.R
+import com.example.todoapp.adapters.OnboardingViewPagerAdapter
+import com.example.todoapp.databinding.ActivityOnboardingExample1Binding
+import com.example.todoapp.utils.Animatoo
 import com.google.android.material.tabs.TabLayoutMediator
 
 class OnboardingExample1Activity : AppCompatActivity() {
@@ -24,6 +24,7 @@ class OnboardingExample1Activity : AppCompatActivity() {
         binding = ActivityOnboardingExample1Binding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
 
         mViewPager = binding.viewPager
         mViewPager.adapter = OnboardingViewPagerAdapter(this, this)

@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
+    tools:context=".fragments.CompletedTasks">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/splash"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerTasks"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:lottie_autoPlay="false"
-        app:lottie_speed="1"
-        app:lottie_fileName="SplashAnimation.json"
-        android:visibility="visible"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_5sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/card_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

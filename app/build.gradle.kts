@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myapp"
+    namespace = "com.example.todoapp"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.myapp"
+        applicationId = "com.example.todoapp"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
@@ -49,10 +49,14 @@ dependencies {
     implementation ("com.airbnb.android:lottie:6.3.0")
     implementation ("com.airbnb.android:lottie:5.2.0")
     implementation ("com.guolindev.permissionx:permissionx:1.7.1")
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+    implementation ("com.intuit.sdp:sdp-android:1.1.0")
 
-    implementation("com.google.firebase:firebase-auth:22.3.1")
-    implementation("com.google.firebase:firebase-firestore:24.10.3")
-    implementation("com.google.firebase:firebase-crashlytics:18.6.2")
+    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.10.3")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

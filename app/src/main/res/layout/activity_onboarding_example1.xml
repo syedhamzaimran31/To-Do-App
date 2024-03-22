@@ -6,17 +6,17 @@
     android:layout_height="match_parent"
     android:background="@color/md_white_1000">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/skip"
-        app:textAllCaps="true"
-        android:textSize="18sp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/_15sdp"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"/>
+        android:layout_marginTop="@dimen/_26sdp"
+        android:layout_marginStart="@dimen/_26sdp"
+        android:layout_marginEnd="@dimen/_26sdp"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
@@ -30,7 +30,7 @@
     <RelativeLayout
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="@dimen/_42sdp"
         android:orientation="horizontal"
         android:background="@color/md_white_1000"
         android:layout_alignParentBottom="true">
@@ -41,32 +41,30 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
+            android:layout_marginBottom="@dimen/_25sdp"
             android:background="@color/white"
             app:tabBackground="@drawable/onboarding_viewpager_selector_blue"
             app:tabGravity="center"
-            app:tabIndicatorHeight="0dp" />
+            app:tabIndicatorHeight="@dimen/_1sdp" />
 
 
         <Button
             android:id="@+id/btn_next_step"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/_45sdp"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:background="?android:attr/selectableItemBackground"
             android:drawableTint="@color/md_grey_900"
             android:text="@string/next"
             android:textColor="@color/colorPrimary"
-            android:textSize="16sp" />
+            android:textSize="@dimen/_15sdp" />
 
     </RelativeLayout>
-
-
 </RelativeLayout>

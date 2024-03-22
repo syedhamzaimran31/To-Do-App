@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.UpdateTasks">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.MyApp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:popupTheme="@style/Theme.MyApp" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/custom_tab" />
+
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/linearLayout4"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent">-->
+
+    <!--        <Button-->
+    <!--            android:id="@+id/completedBtn"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="@dimen/_50sdp"-->
+    <!--            android:layout_marginHorizontal="@dimen/_5sdp"-->
+    <!--            android:layout_marginVertical="@dimen/_20sdp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:backgroundTint="#3D5AFE"-->
+    <!--            android:fontFamily="sans-serif-medium"-->
+    <!--            android:text="Completed"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textSize="@dimen/_12sdp"-->
+    <!--            tools:layout_editor_absoluteX="16dp"></Button>-->
+
+    <!--        <Button-->
+    <!--            android:id="@+id/notCompleteBtn"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="@dimen/_50sdp"-->
+    <!--            android:layout_marginHorizontal="@dimen/_5sdp"-->
+    <!--            android:layout_marginVertical="@dimen/_20sdp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:fontFamily="sans-serif-medium"-->
+    <!--            android:text="Not Completed"-->
+    <!--            android:textColor="#3D5AFE"-->
+    <!--            android:textSize="@dimen/_12sdp"-->
+    <!--            style="?attr/materialButtonOutlinedStyle"-->
+    <!--            tools:layout_editor_absoluteX="16dp"></Button>-->
+
+
+    <!--    </LinearLayout>-->
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        app:layout_constraintCircleRadius="@dimen/_16sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBar"></androidx.appcompat.widget.SearchView>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+</androidx.constraintlayout.widget.ConstraintLayout>

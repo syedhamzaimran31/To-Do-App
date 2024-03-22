@@ -1,4 +1,4 @@
-package com.example.myapp.activities
+package com.example.todoapp.activities
 
 import android.content.ContentValues
 import android.content.Intent
@@ -8,7 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapp.databinding.ActivitySignUpBinding
+import com.example.todoapp.databinding.ActivitySignUpBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
