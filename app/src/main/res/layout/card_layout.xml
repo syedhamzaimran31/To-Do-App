@@ -12,21 +12,24 @@
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginHorizontal="@dimen/_5sdp"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/_5sdp">
 
         <ImageView
+            android:id="@+id/imageValue"
             android:layout_width="@dimen/_180sdp"
             android:layout_height="@dimen/_60sdp"
             android:layout_weight="1"
-            android:src="@drawable/to_do_list"></ImageView>
+            ></ImageView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_5sdp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -65,5 +68,15 @@
                 android:textSize="@dimen/_12sdp" />
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/statusImageValue"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginVertical="@dimen/_20sdp"
+            >
+
+        </ImageView>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

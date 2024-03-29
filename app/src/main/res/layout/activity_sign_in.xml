@@ -72,9 +72,9 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="sans-serif-medium"
             android:text="Password"
-            android:layout_marginTop="@dimen/_10sdp"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"></com.google.android.material.textview.MaterialTextView>
 

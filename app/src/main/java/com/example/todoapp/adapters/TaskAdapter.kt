@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.R
@@ -22,9 +23,11 @@ class TaskAdapter(private val context: Context, courseModelArrayList: ArrayList<
 
     override fun onBindViewHolder(holder: TaskAdapter.ViewHolder, position: Int) {
         val model: TasksModel = taskModelArrayList[position]
-        holder.courseTitleTV.text = model.getTaskTitle()
-        holder.courseStatusTV.text = "" + model.getTaskStatus()
-        holder.courseDateTV.text = model.getTaskDate()
+        holder.taskTitleTV.text = model.getTaskTitle()
+        holder.taskStatusTV.text = "" + model.getTaskStatus()
+        holder.taskDateTV.text = model.getTaskDate()
+        holder.taskImage.setImageResource(model.getTaskImage())
+        holder.taskImageStatus.setImageResource(model.getTaskStatusImg())
     }
 
     override fun getItemCount(): Int {
@@ -34,14 +37,18 @@ class TaskAdapter(private val context: Context, courseModelArrayList: ArrayList<
 
     // View holder class for initializing of your views such as TextView and Imageview.
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val courseDateTV: TextView
-        val courseTitleTV: TextView
-        val courseStatusTV: TextView
+        var taskImage: ImageView
+        val taskDateTV: TextView
+        val taskTitleTV: TextView
+        val taskStatusTV: TextView
+        var taskImageStatus: ImageView
 
         init {
-            courseDateTV = itemView.findViewById(R.id.dateValue)
-            courseTitleTV = itemView.findViewById(R.id.titleValue)
-            courseStatusTV = itemView.findViewById(R.id.statusValue)
+            taskImage = itemView.findViewById(R.id.imageValue)
+            taskDateTV = itemView.findViewById(R.id.dateValue)
+            taskTitleTV = itemView.findViewById(R.id.titleValue)
+            taskStatusTV = itemView.findViewById(R.id.statusValue)
+            taskImageStatus = itemView.findViewById(R.id.statusImageValue)
         }
     }
 
