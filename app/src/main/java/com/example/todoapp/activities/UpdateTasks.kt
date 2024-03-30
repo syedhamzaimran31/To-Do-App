@@ -25,17 +25,20 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
     private lateinit var item2: TextView
     private lateinit var select: TextView
     private lateinit var addTaskBtn: ImageView
-    private lateinit var taskDurationTv: TextView
     private lateinit var dialogLayout: View
+    private lateinit var viewPager: ViewPager
+    private lateinit var taskNameValue: String
+    private lateinit var taskStatusValue: String
+    private lateinit var taskDurationValue: String
+    private lateinit var taskDescriptionValue: String
+
 
     private lateinit var binding: ActivityUpdateTasksBinding
-    private lateinit var viewPager: ViewPager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUpdateTasksBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        val toolbar: androidx.appcompat.widget.Toolbar? = findViewById(R.id.toolbar)
-//        setSupportActionBar(toolbar)
         item1 = binding.include.completed
         item2 = binding.include.notCompleted
         item1.setOnClickListener(this)
@@ -47,19 +50,6 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
         addTaskBtn = binding.addTaskBtn
         val inflater = layoutInflater
         dialogLayout = inflater.inflate(R.layout.dialog_layout, null)
-
-        taskDurationTv = dialogLayout.findViewById<TextView>(R.id.taskDurationTv)
-        taskDurationTv.setOnClickListener {
-            val picker =
-                MaterialTimePicker.Builder()
-                    .setTimeFormat(TimeFormat.CLOCK_12H)
-                    .setHour(12)
-                    .setMinute(10)
-                    .build()
-            Toast.makeText(this, "Working", Toast.LENGTH_SHORT).show()
-        }
-
-
         binding.addTaskBtn.setOnClickListener {
             addTaskDialog(it)
         }
@@ -133,12 +123,36 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
         builder.setTitle("Add Task")
         builder.setCancelable(false)
         dialogLayout = inflater.inflate(R.layout.dialog_layout, null)
-        val taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
-        val taskStatus = dialogLayout.findViewById<AutoCompleteTextView>(R.id.statusAutoTv)
-//        val taskDurationDialog = dialogLayout.findViewById<TimePicker>(R.id.taskDurationDialog)
-        val taskDurationTv = dialogLayout.findViewById<TextView>(R.id.taskDurationTv)
 
-        taskDuration(taskDurationTv)
+        val taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
+        val taskStatus = dialogLayout.findViewById<AutoCompleteTextView>(R.id.taskStatus)
+        val taskDurationTv = dialogLayout.findViewById<TextView>(R.id.taskDurationTv)
+        val taskDescription = dialogLayout.findViewById<EditText>(R.id.taskDescription)
+
+        builder.setView(dialogLayout)
+
+
+        taskDurationTv.setOnClickListener {
+
+            val picker =
+                MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_12H)
+                    .setHour(12)
+                    .setMinute(10)
+                    .setTitleText("Select the Time to Complete the Task")
+                    .build()
+
+            picker.show(supportFragmentManager, "timePicker")
+            picker.addOnPositiveButtonClickListener {
+                val hour = if (picker.hour > 12) picker.hour - 12 else picker.hour
+                val amPm = if (picker.hour >= 12) "PM" else "AM"
+                taskDurationValue = "Complete till :${hour} ${picker.minute} $amPm"
+                taskDurationTv.text = taskDurationValue
+            }
+            picker.addOnNegativeButtonClickListener {
+            }
+
+        }
         builder.setView(dialogLayout)
         val statusArray = resources.getStringArray(R.array.status)
 
@@ -150,34 +164,26 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
         taskStatus.setAdapter(adapter)
 
         builder.setPositiveButton("Add Task") { _, _ ->
+            taskNameValue = taskName.text.toString()
+            taskStatusValue = taskStatus.text.toString()
+            taskDescriptionValue = taskDescription.text.toString()
+
             Toast.makeText(
-                applicationContext,
-                "EditText is " + taskName.text.toString(),
-                Toast.LENGTH_SHORT
+                this,
+                "Task Name is $taskNameValue Task task Status is $taskStatusValue ",
+                Toast.LENGTH_LONG
+            ).show()
+            Toast.makeText(
+                this,
+                "Task Duration is $taskDurationValue Task Description is $taskDescriptionValue ",
+                Toast.LENGTH_LONG
             ).show()
 
         }
         builder.setNegativeButton("Cancel") { _, _ ->
-            Toast.makeText(
-                applicationContext,
-                "EditText is " + taskName.text.toString(),
-                Toast.LENGTH_SHORT
-            ).show()
 
         }
         builder.show()
-    }
-
-    private fun taskDuration(taskTv: TextView) {
-        taskTv.setOnClickListener {
-            val picker =
-                MaterialTimePicker.Builder()
-                    .setTimeFormat(TimeFormat.CLOCK_12H)
-                    .setHour(12)
-                    .setMinute(10)
-                    .build()
-            Toast.makeText(this, "Working", Toast.LENGTH_SHORT).show()
-        }
     }
 
 }

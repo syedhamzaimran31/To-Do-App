@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/customDialogLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -53,14 +54,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_25sdp"
-            android:layout_marginVertical="@dimen/_10sdp"
-
-
-            >
-
+            android:layout_marginVertical="@dimen/_10sdp">
 
             <AutoCompleteTextView
-                android:id="@+id/statusAutoTv"
+                android:id="@+id/taskStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
@@ -68,38 +65,35 @@
                 android:textSize="@dimen/_10sdp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/taskDurationTv"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
-            app:fontFamily="sans-serif-medium"
+            android:layout_height="@dimen/_37sdp"
             android:layout_marginHorizontal="@dimen/_25sdp"
+            android:background="@drawable/border_bg"
             android:fontFamily="sans-serif-medium"
-            android:text="Enter time Duration"
-            android:textSize="@dimen/_12sdp"></com.google.android.material.textview.MaterialTextView>
+            android:padding="@dimen/_12sdp"
+            android:text="Task Duration"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp"></com.google.android.material.textview.MaterialTextView>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="@dimen/_200sdp"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/_100sdp"
             android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/_25sdp"
             android:layout_marginVertical="@dimen/_10sdp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/taskDescription"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top"
                 android:hint="Task Description"
                 android:inputType="text|textMultiLine" />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <!--        <TimePicker-->
-        <!--            android:id="@+id/taskDurationDialog"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="@dimen/_150sdp"-->
-        <!--            android:layout_centerHorizontal="true"-->
-        <!--            android:layout_marginHorizontal="@dimen/_25sdp"-->
-        <!--            android:timePickerMode="clock"-->
-        <!--            android:visibility="invisible" />-->
-
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
