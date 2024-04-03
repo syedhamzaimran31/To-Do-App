@@ -1,8 +1,11 @@
 package com.example.todoapp.activities
 
+import android.content.ContentValues
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -10,14 +13,25 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.todoapp.R
 import com.example.todoapp.adapters.PageAdapter
 import com.example.todoapp.databinding.ActivityUpdateTasksBinding
+import com.example.todoapp.utils.TaskStatus
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.UUID
+
 
 class UpdateTasks : AppCompatActivity(), View.OnClickListener {
     private lateinit var def: ColorStateList
@@ -31,6 +45,9 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
     private lateinit var taskStatusValue: String
     private lateinit var taskDurationValue: String
     private lateinit var taskDescriptionValue: String
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+    lateinit var userId: String
 
 
     private lateinit var binding: ActivityUpdateTasksBinding
@@ -39,6 +56,11 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityUpdateTasksBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        db = Firebase.firestore
+        auth = Firebase.auth
+
+
         item1 = binding.include.completed
         item2 = binding.include.notCompleted
         item1.setOnClickListener(this)
@@ -185,6 +207,41 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
         }
         builder.show()
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun saveDataInFireStore() {
+//        val name = binding.name.text.toString()
+//        val email = binding.email.text.toString()
+//        val password = binding.password.text.toString()
+        userId = Firebase.auth.currentUser?.uid.toString()
+        val createdTime = System.currentTimeMillis()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        val current = LocalDateTime.now().format(formatter)
+        val documentId = UUID.randomUUID().toString()
+        val addTask = hashMapOf(
+            "id" to documentId,
+            "userId" to userId,
+            "taskNam" to taskNameValue,
+            "taskDuration" to taskDurationValue,
+            "taskStatus" to if (taskStatusValue == "Completed") TaskStatus.COMPLETED else {
+                TaskStatus.INCOMPLETE
+            },
+            "taskDescription" to taskDurationValue,
+            "taskImage" to "--",
+            "createdAt" to "$createdTime, $current",
+
+            )
+
+        db.collection("addTask").document(documentId)
+            .set(addTask)
+            .addOnSuccessListener {
+                Log.d(ContentValues.TAG, "Task added with ID: $documentId")
+            }
+            .addOnFailureListener { e ->
+                Log.w(ContentValues.TAG, "Error adding Task")
+            }
+    }
+
 
 }
 
