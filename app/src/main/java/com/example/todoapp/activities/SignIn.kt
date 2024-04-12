@@ -31,6 +31,8 @@ class SignIn : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivitySignInBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
 
@@ -70,8 +72,6 @@ class SignIn : AppCompatActivity() {
                     ).show()
                 }
             }
-        binding = ActivitySignInBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         binding.signUpTv.setOnClickListener {
             val intent = Intent(applicationContext, SignUp::class.java)
@@ -108,6 +108,8 @@ class SignIn : AppCompatActivity() {
                 // to save our data with key and value.
                 editor.apply()
                 Toast.makeText(this, "Successfully LoggedIn", Toast.LENGTH_SHORT).show()
+                val intent=Intent(this,UpdateTasks::class.java)
+                startActivity(intent)
             } else
                 Toast.makeText(this, "Log In failed ", Toast.LENGTH_SHORT).show()
         }

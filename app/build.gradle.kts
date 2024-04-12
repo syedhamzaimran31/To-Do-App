@@ -1,8 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -41,6 +41,8 @@ android {
 }
 
 dependencies {
+    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
+    implementation("com.google.firebase:firebase-analytics")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -51,12 +53,10 @@ dependencies {
     implementation ("com.guolindev.permissionx:permissionx:1.7.1")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.intuit.sdp:sdp-android:1.1.0")
+    implementation("com.google.firebase:firebase-auth:22.3.1")
+    implementation("com.google.firebase:firebase-firestore:24.11.0")
+    implementation("com.google.firebase:firebase-crashlytics:18.6.3")
 
-    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-crashlytics")
-    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-firestore-ktx:24.10.3")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

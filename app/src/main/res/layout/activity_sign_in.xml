@@ -17,21 +17,20 @@
         android:textSize="@dimen/_30sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></com.google.android.material.textview.MaterialTextView>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/materialTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
         android:fontFamily="sans-serif-medium"
         android:text="Hi! Welcome Back, You've been missed "
         android:textAlignment="center"
-        android:textColor="@color/material_dynamic_neutral60"
-        android:textSize="@dimen/_12sdp"
+        android:textSize="@dimen/_14sdp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView3"></com.google.android.material.textview.MaterialTextView>
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView3" />
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -53,7 +52,7 @@
             android:fontFamily="sans-serif-medium"
             android:text="Email"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp"></com.google.android.material.textview.MaterialTextView>
+            android:textSize="@dimen/_14sdp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -76,7 +75,7 @@
             android:fontFamily="sans-serif-medium"
             android:text="Password"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp"></com.google.android.material.textview.MaterialTextView>
+            android:textSize="@dimen/_14sdp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -105,7 +104,7 @@
             android:text="Forgot Password?"
             android:textColor="#3D5AFE"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password"></com.google.android.material.textview.MaterialTextView>
+            app:layout_constraintTop_toBottomOf="@+id/password" />
 
         <Button
             android:id="@+id/SignInBtn"
@@ -118,7 +117,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_16sdp"
             app:layout_constraintTop_toBottomOf="@+id/password"
-            tools:layout_editor_absoluteX="16dp"></Button>
+            tools:layout_editor_absoluteX="16dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -136,25 +135,25 @@
             android:layout_height="@dimen/_1sdp"
             android:layout_marginHorizontal="@dimen/_8sdp"
             android:layout_marginVertical="@dimen/_8sdp"
-            android:background="@color/black"></View>
+            android:background="@color/black" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:text="Or sign in with"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/_14sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button"></com.google.android.material.textview.MaterialTextView>
+            app:layout_constraintTop_toBottomOf="@+id/button" />
 
         <View
             android:layout_width="@dimen/_70sdp"
             android:layout_height="@dimen/_1sdp"
             android:layout_marginHorizontal="@dimen/_8sdp"
             android:layout_marginVertical="@dimen/_8sdp"
-            android:background="@color/black"></View>
+            android:background="@color/black" />
     </LinearLayout>
 
     <LinearLayout
@@ -171,18 +170,18 @@
         <ImageView
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
-            android:src="@drawable/facebooklogo"></ImageView>
+            android:src="@drawable/facebooklogo" />
 
         <ImageView
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_marginHorizontal="@dimen/_30sdp"
-            android:src="@drawable/google"></ImageView>
+            android:src="@drawable/google" />
 
         <ImageView
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
-            android:src="@drawable/mac"></ImageView>
+            android:src="@drawable/mac" />
     </LinearLayout>
 
     <LinearLayout
@@ -201,7 +200,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            android:text="Don't have an account?"></TextView>
+            android:text="Don't have an account?" />
 
         <TextView
             android:id="@+id/signUpTv"
@@ -210,7 +209,7 @@
             android:layout_marginLeft="@dimen/_3sdp"
             android:fontFamily="sans-serif-medium"
             android:text="Sign Up"
-            android:textColor="#3D5AFE"></TextView>
+            android:textColor="#3D5AFE" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

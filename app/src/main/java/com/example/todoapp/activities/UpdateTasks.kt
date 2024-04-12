@@ -1,10 +1,13 @@
 package com.example.todoapp.activities
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
@@ -48,7 +51,8 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     lateinit var userId: String
-
+    private lateinit var documentId: String
+    var checkFieldsBool: Boolean = false
 
     private lateinit var binding: ActivityUpdateTasksBinding
 
@@ -59,7 +63,7 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
 
         db = Firebase.firestore
         auth = Firebase.auth
-
+        documentId = UUID.randomUUID().toString()
 
         item1 = binding.include.completed
         item2 = binding.include.notCompleted
@@ -73,7 +77,9 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
         val inflater = layoutInflater
         dialogLayout = inflater.inflate(R.layout.dialog_layout, null)
         binding.addTaskBtn.setOnClickListener {
-            addTaskDialog(it)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                addTaskDialog(it)
+            }
         }
 
         viewPager.adapter = PageAdapter(supportFragmentManager)
@@ -105,11 +111,53 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
 
             }
 
-
             override fun onPageScrollStateChanged(state: Int) {
 
             }
         })
+
+        val docRef = db.collection("addTask")
+        docRef.get()
+            .addOnSuccessListener { documents ->
+                if (documents != null) {
+                    for (document in documents) {
+//                        Toast.makeText(applicationContext, "$document", Toast.LENGTH_SHORT).show()
+                        Log.d(TAG, "${document.id} => ${document.data}")
+                    }
+                } else {
+                    Toast.makeText(applicationContext, "No such Document else", Toast.LENGTH_SHORT)
+                        .show()
+                    Log.d(TAG, "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(applicationContext, "On Failure", Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "get failed with ", exception)
+            }
+        docRef
+            .whereEqualTo("taskStatus", "COMPLETED")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    Toast.makeText(applicationContext, "$document", Toast.LENGTH_LONG).show()
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents: ", exception)
+            }
+        docRef
+            .whereEqualTo("taskStatus", "COMPLETED")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    Toast.makeText(applicationContext, "$document", Toast.LENGTH_LONG).show()
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents: ", exception)
+            }
     }
 
     override fun onClick(view: View) {
@@ -138,6 +186,7 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun addTaskDialog(view: View) {
 
         val builder = AlertDialog.Builder(this)
@@ -146,6 +195,8 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
         builder.setCancelable(false)
         dialogLayout = inflater.inflate(R.layout.dialog_layout, null)
 
+        builder.setPositiveButton("Add Task", null)
+//
         val taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
         val taskStatus = dialogLayout.findViewById<AutoCompleteTextView>(R.id.taskStatus)
         val taskDurationTv = dialogLayout.findViewById<TextView>(R.id.taskDurationTv)
@@ -168,14 +219,13 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
             picker.addOnPositiveButtonClickListener {
                 val hour = if (picker.hour > 12) picker.hour - 12 else picker.hour
                 val amPm = if (picker.hour >= 12) "PM" else "AM"
-                taskDurationValue = "Complete till :${hour} ${picker.minute} $amPm"
+                taskDurationValue = "$hour ${picker.minute} $amPm"
                 taskDurationTv.text = taskDurationValue
             }
             picker.addOnNegativeButtonClickListener {
             }
 
         }
-        builder.setView(dialogLayout)
         val statusArray = resources.getStringArray(R.array.status)
 
 
@@ -185,7 +235,7 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
         )
         taskStatus.setAdapter(adapter)
 
-        builder.setPositiveButton("Add Task") { _, _ ->
+        builder.setPositiveButton("Add Task") setOnClickListener@{ _, _ ->
             taskNameValue = taskName.text.toString()
             taskStatusValue = taskStatus.text.toString()
             taskDescriptionValue = taskDescription.text.toString()
@@ -193,40 +243,72 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
             Toast.makeText(
                 this,
                 "Task Name is $taskNameValue Task task Status is $taskStatusValue ",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
             Toast.makeText(
                 this,
                 "Task Duration is $taskDurationValue Task Description is $taskDescriptionValue ",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
-
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                saveDataInFireStore()
+                Toast.makeText(this, "Data Saved", Toast.LENGTH_LONG).show()
+            }
         }
+
         builder.setNegativeButton("Cancel") { _, _ ->
 
         }
-        builder.show()
+        val dialog = builder.create()
+        dialog.show();
+
+        val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+
+        //add Text Watcher to check if the all the fields of Dialog are not empty
+        val textWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val checkFields =
+                    !taskName.text.isNullOrBlank() && !taskStatus.text.isNullOrBlank() &&
+                            !taskDurationTv.text.isNullOrBlank() && !taskDescription.text.isNullOrBlank()
+                positiveButton.isEnabled = checkFields
+            }
+
+        }
+
+        //called when the Text changes of fields to sure that all fields are input
+        taskName.addTextChangedListener(textWatcher)
+        taskStatus.addTextChangedListener(textWatcher)
+        taskDurationTv.addTextChangedListener(textWatcher)
+        taskDescription.addTextChangedListener(textWatcher)
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false;
+        dialog.show()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun saveDataInFireStore() {
-//        val name = binding.name.text.toString()
-//        val email = binding.email.text.toString()
-//        val password = binding.password.text.toString()
+
         userId = Firebase.auth.currentUser?.uid.toString()
+
         val createdTime = System.currentTimeMillis()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val current = LocalDateTime.now().format(formatter)
-        val documentId = UUID.randomUUID().toString()
+        Toast.makeText(applicationContext, taskStatusValue, Toast.LENGTH_SHORT).show()
         val addTask = hashMapOf(
             "id" to documentId,
             "userId" to userId,
-            "taskNam" to taskNameValue,
+            "taskName" to taskNameValue,
             "taskDuration" to taskDurationValue,
-            "taskStatus" to if (taskStatusValue == "Completed") TaskStatus.COMPLETED else {
+            "taskStatus" to if (taskStatusValue == "Active") TaskStatus.COMPLETED else {
                 TaskStatus.INCOMPLETE
             },
-            "taskDescription" to taskDurationValue,
+            "taskDescription" to taskDescriptionValue,
             "taskImage" to "--",
             "createdAt" to "$createdTime, $current",
 
@@ -236,12 +318,12 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
             .set(addTask)
             .addOnSuccessListener {
                 Log.d(ContentValues.TAG, "Task added with ID: $documentId")
+                Toast.makeText(this, "Task Added", Toast.LENGTH_LONG).show()
             }
             .addOnFailureListener { e ->
                 Log.w(ContentValues.TAG, "Error adding Task")
+                Toast.makeText(this, "Task Failed", Toast.LENGTH_LONG).show()
+
             }
     }
-
-
 }
-

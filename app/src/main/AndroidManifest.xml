@@ -45,7 +45,9 @@
             android:exported="false" />
         <activity
             android:name=".activities.SignUp"
-            android:exported="false" />
+            android:exported="true" >
+
+        </activity>
         <activity android:name=".activities.OnboardingExample1Activity" />
         <activity android:name=".activities.OnboardingFinishActivity" />
         <activity

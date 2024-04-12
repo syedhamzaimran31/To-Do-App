@@ -25,7 +25,6 @@ class OnboardingExample1Activity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-
         mViewPager = binding.viewPager
         mViewPager.adapter = OnboardingViewPagerAdapter(this, this)
         TabLayoutMediator(binding.pageIndicator, mViewPager) { _, _ -> }.attach()
