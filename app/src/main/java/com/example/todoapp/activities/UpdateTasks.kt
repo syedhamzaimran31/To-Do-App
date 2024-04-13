@@ -19,10 +19,14 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.todoapp.R
 import com.example.todoapp.adapters.PageAdapter
+import com.example.todoapp.adapters.TaskAdapter
 import com.example.todoapp.databinding.ActivityUpdateTasksBinding
+import com.example.todoapp.fragments.CompletedTasks
+import com.example.todoapp.model.TasksModel
 import com.example.todoapp.utils.TaskStatus
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -37,6 +41,7 @@ import java.util.UUID
 
 
 class UpdateTasks : AppCompatActivity(), View.OnClickListener {
+//    private lateinit var recyclerViewCompleted: RecyclerView
     private lateinit var def: ColorStateList
     private lateinit var item1: TextView
     private lateinit var item2: TextView
@@ -52,7 +57,6 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
     private lateinit var db: FirebaseFirestore
     lateinit var userId: String
     private lateinit var documentId: String
-    var checkFieldsBool: Boolean = false
 
     private lateinit var binding: ActivityUpdateTasksBinding
 
@@ -61,6 +65,12 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
         binding = ActivityUpdateTasksBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //get recyclerview from completedTask Fragment
+//        val fragmentTaskComplete =
+//            fragmentManager.findFragmentById(R.id.recyclerTasksCompleted) as CompletedTasks
+//        recyclerViewCompleted = fragmentTaskComplete.getRecyclerView()
+//
+//        val tasks: ArrayList<TasksModel> = ArrayList()
         db = Firebase.firestore
         auth = Firebase.auth
         documentId = UUID.randomUUID().toString()
@@ -116,48 +126,38 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
             }
         })
 
-        val docRef = db.collection("addTask")
-        docRef.get()
-            .addOnSuccessListener { documents ->
-                if (documents != null) {
-                    for (document in documents) {
-//                        Toast.makeText(applicationContext, "$document", Toast.LENGTH_SHORT).show()
-                        Log.d(TAG, "${document.id} => ${document.data}")
-                    }
-                } else {
-                    Toast.makeText(applicationContext, "No such Document else", Toast.LENGTH_SHORT)
-                        .show()
-                    Log.d(TAG, "No such document")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(applicationContext, "On Failure", Toast.LENGTH_SHORT).show()
-                Log.d(TAG, "get failed with ", exception)
-            }
-        docRef
-            .whereEqualTo("taskStatus", "COMPLETED")
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    Toast.makeText(applicationContext, "$document", Toast.LENGTH_LONG).show()
-                    Log.d(TAG, "${document.id} => ${document.data}")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
-        docRef
-            .whereEqualTo("taskStatus", "COMPLETED")
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    Toast.makeText(applicationContext, "$document", Toast.LENGTH_LONG).show()
-                    Log.d(TAG, "${document.id} => ${document.data}")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
+//        val docRef = db.collection("addTask")
+//        docRef
+//            .whereEqualTo("taskStatus", "COMPLETED")
+//            .get()
+//            .addOnSuccessListener { documents ->
+//                for (document in documents) {
+////                    val taskName= document.data["taskName"].toString()
+////                    val taskStatus= document.data["taskStatus"].toString()
+////                    val taskDate= document.data["taskDate"].toString()
+//                    val task = document.toObject(TasksModel::class.java)
+//                    tasks.add(task)
+//                    Toast.makeText(applicationContext, "$document", Toast.LENGTH_LONG).show()
+//                    Log.d(TAG, "${document.id} => ${document.data}")
+//                }
+//                val taskAdapter = TaskAdapter(this, tasks)
+//                recyclerViewCompleted.adapter = taskAdapter
+//            }
+//            .addOnFailureListener { exception ->
+//                Log.w(TAG, "Error getting documents: ", exception)
+//            }
+//        docRef
+//            .whereEqualTo("taskStatus", "INCOMPLETE")
+//            .get()
+//            .addOnSuccessListener { documents ->
+//                for (document in documents) {
+//                    Toast.makeText(applicationContext, "$document", Toast.LENGTH_LONG).show()
+//                    Log.d(TAG, "${document.id} => ${document.data}")
+//                }
+//            }
+//            .addOnFailureListener { exception ->
+//                Log.w(TAG, "Error getting documents: ", exception)
+//            }
     }
 
     override fun onClick(view: View) {

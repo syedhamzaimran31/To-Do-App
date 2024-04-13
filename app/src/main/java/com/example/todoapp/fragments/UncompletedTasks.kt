@@ -27,22 +27,22 @@ class UncompletedTasks : Fragment() {
         val taskStatusImageResource = R.drawable.cross
         val taskRecycler = binding?.recyclerTasks
 
-        val taskModelArrayList: ArrayList<TasksModel> = ArrayList()
-        taskModelArrayList.add(
-            TasksModel("DSA in Java", "Status: Active", "Date: 23-03-24", taskImageResource, taskStatusImageResource)
-        )
-        taskModelArrayList.add(
-            TasksModel("DSA in Java", "Status: Active", "Date: 12-03-24", taskImageResource, taskStatusImageResource)
-        )
-        taskModelArrayList.add(
-            TasksModel("DSA in Java", "Status: Active", "Date: 09-03-24", taskImageResource, taskStatusImageResource)
-        )
-        val taskAdapter = TaskAdapter(requireContext(), taskModelArrayList)
+//        val taskModelArrayList: ArrayList<TasksModel> = ArrayList()
+//        taskModelArrayList.add(
+//            TasksModel("DSA in Java", "Status: Active", "Date: 23-03-24", taskImageResource, taskStatusImageResource)
+//        )
+//        taskModelArrayList.add(
+//            TasksModel("DSA in Java", "Status: Active", "Date: 12-03-24", taskImageResource, taskStatusImageResource)
+//        )
+//        taskModelArrayList.add(
+//            TasksModel("DSA in Java", "Status: Active", "Date: 09-03-24", taskImageResource, taskStatusImageResource)
+//        )
+//        val taskAdapter = TaskAdapter(requireContext(), taskModelArrayList)
 
         val linearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        taskRecycler?.layoutManager = linearLayoutManager
-        taskRecycler?.adapter = taskAdapter
+//        taskRecycler?.layoutManager = linearLayoutManager
+//        taskRecycler?.adapter = taskAdapter
         return binding?.root
 
     }

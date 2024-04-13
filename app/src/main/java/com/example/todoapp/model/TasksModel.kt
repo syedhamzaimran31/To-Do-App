@@ -1,55 +1,84 @@
 package com.example.todoapp.model
 
 import android.widget.ImageView
+import java.time.Duration
+
 
 class TasksModel(
-    private var taskTitle: String,
+    private var id: String,
+    private var userId: String,
+    private var taskName: String,
     private var taskStatus: String,
-    private var taskDate: String,
-    private var taskImage: Int,
-    private var taskStatusImage: Int
+    private var createdAt: String,
+    private var taskImage: String,
+    private var taskDuration: String,
+    private var taskDescription: String
 ) {
+    constructor() : this("", "", "", "", "", "", "", "")
 
-    // Getter and Setter
-    fun getTaskTitle(): String {
-        return taskTitle
+    // Getters
+    fun getId(): String {
+        return id
     }
 
-    fun setTaskTitle(taskTitle: String) {
-        this.taskTitle = taskTitle
+    fun getUserId(): String {
+        return userId
+    }
+
+    fun getTaskName(): String {
+        return taskName
     }
 
     fun getTaskStatus(): String {
         return taskStatus
     }
 
+    fun getCreatedAt(): String {
+        return createdAt
+    }
+
+    fun getTaskImage(): String {
+        return taskImage
+    }
+
+    fun getTaskDuration(): String {
+        return taskDuration
+    }
+
+   fun getTaskDescription():String{
+       return taskDescription
+   }
+    // Setters
+    fun setId(id: String) {
+        this.id = id
+    }
+
+    fun setUserId(userId: String) {
+        this.userId = userId
+    }
+
+    fun setTaskName(taskName: String) {
+        this.taskName = taskName
+    }
+
     fun setTaskStatus(taskStatus: String) {
         this.taskStatus = taskStatus
     }
 
-    fun getTaskDate(): String {
-        return taskDate
+    fun setCreatedAt(createdAt: String) {
+        this.createdAt = createdAt
     }
 
-    fun setTaskDate(taskDate: String) {
-        this.taskDate = taskDate
-    }
-
-    fun getTaskImage(): Int {
-        return taskImage
-    }
-
-    fun setTaskImage(taskImage: Int) {
+    fun setTaskImage(taskImage: String) {
         this.taskImage = taskImage
     }
 
-    fun getTaskStatusImg(): Int {
-        return taskStatusImage
+    fun setTaskDuration(taskDuration: String) {
+        this.taskDuration = taskDuration
     }
 
-    fun setTaskStatusImg(taskStatusImage: Int) {
-        this.taskStatusImage = taskStatusImage
+    fun setTaskDescription(taskDescription: String) {
+        this.taskDescription = taskDescription
     }
-
 
 }

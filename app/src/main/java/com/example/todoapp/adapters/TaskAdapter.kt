@@ -23,11 +23,10 @@ class TaskAdapter(private val context: Context, courseModelArrayList: ArrayList<
 
     override fun onBindViewHolder(holder: TaskAdapter.ViewHolder, position: Int) {
         val model: TasksModel = taskModelArrayList[position]
-        holder.taskTitleTV.text = model.getTaskTitle()
+        holder.taskTitleTV.text = model.getTaskName()
         holder.taskStatusTV.text = "" + model.getTaskStatus()
-        holder.taskDateTV.text = model.getTaskDate()
-        holder.taskImage.setImageResource(model.getTaskImage())
-        holder.taskImageStatus.setImageResource(model.getTaskStatusImg())
+        holder.taskDateTV.text = model.getCreatedAt()
+//        holder.taskImage.setImageResource(model.getTaskImage())
     }
 
     override fun getItemCount(): Int {
