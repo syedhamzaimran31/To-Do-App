@@ -1,5 +1,6 @@
 package com.example.todoapp.fragments
 
+
 import android.content.ContentValues
 import android.os.Build
 import android.os.Bundle
@@ -26,6 +27,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
+
 class CompletedTasks : Fragment() {
 
     private lateinit var auth: FirebaseAuth
@@ -42,33 +44,31 @@ class CompletedTasks : Fragment() {
     ): View? {
         binding = FragmentCompleteTasksBinding.inflate(inflater, container, false)
 
-        val taskImageResource = R.drawable.to_do_list
+        val taskImageResource = R.drawable.tasks_done
         val taskStatusImageResource = R.drawable.tick
+
         taskRecyclerCompleted = binding?.recyclerTasksCompleted!!
         val taskModelArrayList: ArrayList<TasksModel> = ArrayList()
         db = Firebase.firestore
         auth = Firebase.auth
-
+        val resTaskImage = resources.getIdentifier("tasks_done", "drawable", this.taskBinding.root.context.packageName)
         val docRef = db.collection("addTask")
         docRef
             .whereEqualTo("taskStatus", "COMPLETED")
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-//                    val taskName= document.data["taskName"].toString()
-//                    val taskStatus= document.data["taskStatus"].toString()
-//                    val taskDate= document.data["taskDate"].toString()
                     val task = document.toObject(TasksModel::class.java)
                     val taskDate = task.getCreatedAt()
-                    val parts=taskDate.split(", ")
-                    val timestamp=parts[0].toLong()
-                    val dateTime=parts[1]
-                    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-                    val instant=Instant.ofEpochMilli(timestamp)
-                    val dateTimeString=LocalDateTime.parse(dateTime,formatter)
-                    val formattedDateTime=dateTimeString.format(formatter)
-
-//                    val formattedTaskDate = taskDate.format(formatter)
+                    val parts = taskDate.split(", ")
+                    val timestamp = parts[0].toLong()
+                    val instant = Instant.ofEpochMilli(timestamp)
+                    val formattedDateTime =
+                        LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+                            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+                    task.setCreatedAt(formattedDateTime)
+                    task.setTaskImage(taskImageResource)
+                    task.setTaskStatusImage(taskStatusImageResource)
                     Toast.makeText(requireContext(), formattedDateTime, Toast.LENGTH_SHORT).show()
                     taskModelArrayList.add(task)
                     Toast.makeText(requireContext(), "$document", Toast.LENGTH_LONG).show()
@@ -81,18 +81,6 @@ class CompletedTasks : Fragment() {
 
                 taskRecyclerCompleted.layoutManager = linearLayoutManager
                 taskRecyclerCompleted.adapter = taskAdapter
-            }
-            .addOnFailureListener { exception ->
-                Log.w(ContentValues.TAG, "Error getting documents: ", exception)
-            }
-        docRef
-            .whereEqualTo("taskStatus", "COMPLETED")
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    Toast.makeText(requireContext(), "$document", Toast.LENGTH_LONG).show()
-                    Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
-                }
             }
             .addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents: ", exception)

@@ -1,7 +1,6 @@
 package com.example.todoapp.activities
 
 import android.content.ContentValues
-import android.content.ContentValues.TAG
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Build
@@ -19,14 +18,10 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.todoapp.R
 import com.example.todoapp.adapters.PageAdapter
-import com.example.todoapp.adapters.TaskAdapter
 import com.example.todoapp.databinding.ActivityUpdateTasksBinding
-import com.example.todoapp.fragments.CompletedTasks
-import com.example.todoapp.model.TasksModel
 import com.example.todoapp.utils.TaskStatus
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -41,7 +36,8 @@ import java.util.UUID
 
 
 class UpdateTasks : AppCompatActivity(), View.OnClickListener {
-//    private lateinit var recyclerViewCompleted: RecyclerView
+    //    private lateinit var recyclerViewCompleted: RecyclerView
+//    private lateinit var taskImageView: ImageView
     private lateinit var def: ColorStateList
     private lateinit var item1: TextView
     private lateinit var item2: TextView
@@ -86,6 +82,7 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
         addTaskBtn = binding.addTaskBtn
         val inflater = layoutInflater
         dialogLayout = inflater.inflate(R.layout.dialog_layout, null)
+
         binding.addTaskBtn.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 addTaskDialog(it)
@@ -125,39 +122,6 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
 
             }
         })
-
-//        val docRef = db.collection("addTask")
-//        docRef
-//            .whereEqualTo("taskStatus", "COMPLETED")
-//            .get()
-//            .addOnSuccessListener { documents ->
-//                for (document in documents) {
-////                    val taskName= document.data["taskName"].toString()
-////                    val taskStatus= document.data["taskStatus"].toString()
-////                    val taskDate= document.data["taskDate"].toString()
-//                    val task = document.toObject(TasksModel::class.java)
-//                    tasks.add(task)
-//                    Toast.makeText(applicationContext, "$document", Toast.LENGTH_LONG).show()
-//                    Log.d(TAG, "${document.id} => ${document.data}")
-//                }
-//                val taskAdapter = TaskAdapter(this, tasks)
-//                recyclerViewCompleted.adapter = taskAdapter
-//            }
-//            .addOnFailureListener { exception ->
-//                Log.w(TAG, "Error getting documents: ", exception)
-//            }
-//        docRef
-//            .whereEqualTo("taskStatus", "INCOMPLETE")
-//            .get()
-//            .addOnSuccessListener { documents ->
-//                for (document in documents) {
-//                    Toast.makeText(applicationContext, "$document", Toast.LENGTH_LONG).show()
-//                    Log.d(TAG, "${document.id} => ${document.data}")
-//                }
-//            }
-//            .addOnFailureListener { exception ->
-//                Log.w(TAG, "Error getting documents: ", exception)
-//            }
     }
 
     override fun onClick(view: View) {
@@ -197,13 +161,13 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
 
         builder.setPositiveButton("Add Task", null)
 //
+        builder.setView(dialogLayout)
+
         val taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
         val taskStatus = dialogLayout.findViewById<AutoCompleteTextView>(R.id.taskStatus)
         val taskDurationTv = dialogLayout.findViewById<TextView>(R.id.taskDurationTv)
         val taskDescription = dialogLayout.findViewById<EditText>(R.id.taskDescription)
-
-        builder.setView(dialogLayout)
-
+        val taskImage = dialogLayout.findViewById<ImageView>(R.id.taskImageValue)
 
         taskDurationTv.setOnClickListener {
 
@@ -309,7 +273,8 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
                 TaskStatus.INCOMPLETE
             },
             "taskDescription" to taskDescriptionValue,
-            "taskImage" to "--",
+            "taskImage" to 0,
+            "taskStatusImage" to 0,
             "createdAt" to "$createdTime, $current",
 
             )
@@ -326,4 +291,5 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
 
             }
     }
+
 }

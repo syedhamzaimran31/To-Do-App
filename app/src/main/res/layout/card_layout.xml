@@ -20,7 +20,7 @@
         android:paddingVertical="@dimen/_5sdp">
 
         <ImageView
-            android:id="@+id/imageValue"
+            android:id="@+id/taskImageValue"
             android:layout_width="@dimen/_180sdp"
             android:layout_height="@dimen/_60sdp"
             android:layout_weight="1"

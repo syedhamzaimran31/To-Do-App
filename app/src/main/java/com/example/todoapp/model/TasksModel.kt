@@ -1,8 +1,5 @@
 package com.example.todoapp.model
 
-import android.widget.ImageView
-import java.time.Duration
-
 
 class TasksModel(
     private var id: String,
@@ -10,11 +7,12 @@ class TasksModel(
     private var taskName: String,
     private var taskStatus: String,
     private var createdAt: String,
-    private var taskImage: String,
+    private var taskImage: Int,
+    private var taskStatusImage:Int,
     private var taskDuration: String,
     private var taskDescription: String
 ) {
-    constructor() : this("", "", "", "", "", "", "", "")
+    constructor() : this("", "", "", "", "", 0,0, "", "")
 
     // Getters
     fun getId(): String {
@@ -37,10 +35,12 @@ class TasksModel(
         return createdAt
     }
 
-    fun getTaskImage(): String {
+    fun getTaskImage(): Int {
         return taskImage
     }
-
+    fun getTaskStatusImage(): Int {
+        return taskStatusImage
+    }
     fun getTaskDuration(): String {
         return taskDuration
     }
@@ -69,10 +69,12 @@ class TasksModel(
         this.createdAt = createdAt
     }
 
-    fun setTaskImage(taskImage: String) {
+    fun setTaskImage(taskImage: Int) {
         this.taskImage = taskImage
     }
-
+    fun setTaskStatusImage(taskStatusImage: Int) {
+        this.taskStatusImage = taskStatusImage
+    }
     fun setTaskDuration(taskDuration: String) {
         this.taskDuration = taskDuration
     }

@@ -26,7 +26,8 @@ class TaskAdapter(private val context: Context, courseModelArrayList: ArrayList<
         holder.taskTitleTV.text = model.getTaskName()
         holder.taskStatusTV.text = "" + model.getTaskStatus()
         holder.taskDateTV.text = model.getCreatedAt()
-//        holder.taskImage.setImageResource(model.getTaskImage())
+        holder.taskImage.setImageResource(model.getTaskImage())
+        holder.taskImageStatus.setImageResource(model.getTaskStatusImage())
     }
 
     override fun getItemCount(): Int {
@@ -43,7 +44,7 @@ class TaskAdapter(private val context: Context, courseModelArrayList: ArrayList<
         var taskImageStatus: ImageView
 
         init {
-            taskImage = itemView.findViewById(R.id.imageValue)
+            taskImage = itemView.findViewById(R.id.taskImageValue)
             taskDateTV = itemView.findViewById(R.id.dateValue)
             taskTitleTV = itemView.findViewById(R.id.titleValue)
             taskStatusTV = itemView.findViewById(R.id.statusValue)

@@ -6,7 +6,7 @@
     tools:context=".fragments.UncompletedTasks">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerTasks"
+        android:id="@+id/recyclerTasksIncomplete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_5sdp"
