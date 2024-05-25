@@ -4,13 +4,11 @@ import android.content.ContentValues
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.R
@@ -36,12 +34,13 @@ class UncompletedTasks : Fragment() {
 
     private var binding: FragmentUncompletedTasksBinding? = null
     private val taskBinding get() = binding!!
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentUncompletedTasksBinding.inflate(inflater,container,false)
+        binding = FragmentUncompletedTasksBinding.inflate(inflater, container, false)
 
         val taskImageResource = R.drawable.tasks_pending
         val taskStatusImageResource = R.drawable.cross
@@ -51,39 +50,80 @@ class UncompletedTasks : Fragment() {
         db = Firebase.firestore
         auth = Firebase.auth
 
+        //
         val docRef = db.collection("addTask")
         docRef
-            .whereEqualTo("taskStatus", "INCOMPLETE")
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    val task = document.toObject(TasksModel::class.java)
-                    val taskDate = task.getCreatedAt()
-                    val parts = taskDate.split(", ")
-                    val timestamp = parts[0].toLong()
-                    val instant = Instant.ofEpochMilli(timestamp)
-                    val formattedDateTime =
-                        LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
-                            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
-                    task.setCreatedAt(formattedDateTime)
-                    task.setTaskImage(taskImageResource)
-                    task.setTaskStatusImage(taskStatusImageResource)
-                    Toast.makeText(requireContext(), formattedDateTime, Toast.LENGTH_SHORT).show()
-                    taskModelArrayList.add(task)
-                    Toast.makeText(requireContext(), "$document", Toast.LENGTH_LONG).show()
-                    Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+            .whereEqualTo("taskStatus", "InActive")
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.w(ContentValues.TAG, "Listen failed.", e)
+                    return@addSnapshotListener
                 }
-                val taskAdapter = TaskAdapter(requireContext(), taskModelArrayList)
-                taskRecyclerIncomplete.adapter = taskAdapter
-                val linearLayoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-                taskRecyclerIncomplete.layoutManager = linearLayoutManager
-                taskRecyclerIncomplete.adapter = taskAdapter
+                taskModelArrayList.clear()
+
+                if (snapshot != null) {
+                    for (document in snapshot) {
+                        val task = document.toObject(TasksModel::class.java)
+                        val taskDate = task.getCreatedAt()
+                        val parts = taskDate.split(", ")
+                        val timestamp = parts[0].toLong()
+                        val instant = Instant.ofEpochMilli(timestamp)
+                        val formattedDateTime =
+                            LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+                                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+                        task.setCreatedAt(formattedDateTime)
+                        task.setTaskImage(taskImageResource)
+                        task.setTaskStatusImage(taskStatusImageResource)
+                        taskModelArrayList.add(task)
+                        Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+                    }
+                    val taskAdapter = TaskAdapter(requireContext(), taskModelArrayList)
+                    taskRecyclerIncomplete.adapter = taskAdapter
+                    val linearLayoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+                    taskRecyclerIncomplete.layoutManager = linearLayoutManager
+                    taskRecyclerIncomplete.adapter = taskAdapter
+                } else {
+                    Log.d(ContentValues.TAG, "Current data: null")
+                }
             }
-            .addOnFailureListener { exception ->
-                Log.w(ContentValues.TAG, "Error getting documents: ", exception)
-            }
+
+        //
+//        val docRef = db.collection("addTask")
+//        docRef
+//            .whereEqualTo("taskStatus", "INCOMPLETE")
+//            .get()
+//            .addOnSuccessListener { documents ->
+//                for (document in documents) {
+//                    val task = document.toObject(TasksModel::class.java)
+//                    val taskDate = task.getCreatedAt()
+//                    val parts = taskDate.split(", ")
+//                    val timestamp = parts[0].toLong()
+//                    val instant = Instant.ofEpochMilli(timestamp)
+//                    val formattedDateTime =
+//                        LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+//                            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+//                    task.setCreatedAt(formattedDateTime)
+//                    task.setTaskImage(taskImageResource)
+//                    task.setTaskStatusImage(taskStatusImageResource)
+//                    Toast.makeText(requireContext(), formattedDateTime, Toast.LENGTH_SHORT).show()
+//                    taskModelArrayList.add(task)
+//                    Toast.makeText(requireContext(), "$document", Toast.LENGTH_LONG).show()
+//                    Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+//                }
+//                val taskAdapter = TaskAdapter(requireContext(), taskModelArrayList)
+//                taskRecyclerIncomplete.adapter = taskAdapter
+//                val linearLayoutManager =
+//                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+//
+//                taskRecyclerIncomplete.layoutManager = linearLayoutManager
+//                taskRecyclerIncomplete.adapter = taskAdapter
+//            }
+//            .addOnFailureListener { exception ->
+//                Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+//            }
 
 //        val taskModelArrayList: ArrayList<TasksModel> = ArrayList()
 //        taskModelArrayList.add(
@@ -104,6 +144,7 @@ class UncompletedTasks : Fragment() {
         return binding?.root
 
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null

@@ -36,8 +36,6 @@ import java.util.UUID
 
 
 class UpdateTasks : AppCompatActivity(), View.OnClickListener {
-    //    private lateinit var recyclerViewCompleted: RecyclerView
-//    private lateinit var taskImageView: ImageView
     private lateinit var def: ColorStateList
     private lateinit var item1: TextView
     private lateinit var item2: TextView
@@ -61,12 +59,6 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
         binding = ActivityUpdateTasksBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //get recyclerview from completedTask Fragment
-//        val fragmentTaskComplete =
-//            fragmentManager.findFragmentById(R.id.recyclerTasksCompleted) as CompletedTasks
-//        recyclerViewCompleted = fragmentTaskComplete.getRecyclerView()
-//
-//        val tasks: ArrayList<TasksModel> = ArrayList()
         db = Firebase.firestore
         auth = Firebase.auth
         documentId = UUID.randomUUID().toString()
@@ -88,6 +80,7 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
                 addTaskDialog(it)
             }
         }
+
 
         viewPager.adapter = PageAdapter(supportFragmentManager)
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -160,7 +153,6 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
         dialogLayout = inflater.inflate(R.layout.dialog_layout, null)
 
         builder.setPositiveButton("Add Task", null)
-//
         builder.setView(dialogLayout)
 
         val taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
@@ -245,7 +237,6 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
 
         }
 
-        //called when the Text changes of fields to sure that all fields are input
         taskName.addTextChangedListener(textWatcher)
         taskStatus.addTextChangedListener(textWatcher)
         taskDurationTv.addTextChangedListener(textWatcher)
@@ -253,6 +244,19 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false;
         dialog.show()
+    }
+
+    fun showTaskDialog(){
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        builder.setTitle("Add Task")
+        builder.setCancelable(false)
+        dialogLayout = inflater.inflate(R.layout.dialog_layout, null)
+
+        builder.setPositiveButton("Add Task", null)
+
+        builder.setView(dialogLayout)
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -269,8 +273,8 @@ class UpdateTasks : AppCompatActivity(), View.OnClickListener {
             "userId" to userId,
             "taskName" to taskNameValue,
             "taskDuration" to taskDurationValue,
-            "taskStatus" to if (taskStatusValue == "Active") TaskStatus.COMPLETED else {
-                TaskStatus.INCOMPLETE
+            "taskStatus" to if (taskStatusValue == "Active") TaskStatus.Active else {
+                TaskStatus.InActive
             },
             "taskDescription" to taskDescriptionValue,
             "taskImage" to 0,

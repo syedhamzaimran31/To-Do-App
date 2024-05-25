@@ -33,10 +33,6 @@ class SignUp : AppCompatActivity() {
         db = Firebase.firestore
 
 
-        val signUpBtn = binding.signUpBtn
-
-
-
         auth = Firebase.auth
 
         binding.signUpBtn.setOnClickListener {
@@ -46,7 +42,6 @@ class SignUp : AppCompatActivity() {
             val intent = Intent(applicationContext, SignIn::class.java)
             startActivity(intent)
         }
-        val auth = FirebaseAuth.getInstance()
 
 
     }

@@ -49,7 +49,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Completed"
+                    android:text="Active"
                     android:textColor="@android:color/white" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -58,7 +58,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Uncompleted" />
+                    android:text="In Active" />
 
             </LinearLayout>
         </FrameLayout>

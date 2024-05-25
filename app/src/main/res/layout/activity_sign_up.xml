@@ -27,7 +27,7 @@
         android:fontFamily="sans-serif-medium"
         android:text="Fill your information below or \n register with your social account"
         android:textAlignment="center"
-        android:textColor="@color/material_dynamic_neutral60"
+        android:textColor="@color/dark_grey"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
